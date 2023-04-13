@@ -1,8 +1,10 @@
 import FreelanceItem from "@/components/FreelanceItem/FreelanceItem";
 import Header from "@/components/Header/Header";
+import Loading from "@/components/Loading/Loading";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
-export default function Search() {
+function Search() {
   return (
     <>
       <Head>
@@ -11,7 +13,7 @@ export default function Search() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-full flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700">
+      <main className="w-full h-full-vh flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700">
         <Header />
         <div className="relative w-5/6 md:w-2/3 bg-white h- dark:bg-slate-900 flex flex-col justify-center items-center p-10 rounded-md">
           <div className="w-full flex justify-between">
@@ -23,14 +25,43 @@ export default function Search() {
             </span>
           </div>
           <div className="w-full flex flex-col py-5">
-            <FreelanceItem />
-            <FreelanceItem />
-            <FreelanceItem />
-            <FreelanceItem />
-            <FreelanceItem />
+            <Loading />
           </div>
         </div>
       </main>
     </>
   );
 }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const keyword = ctx.query.keyword;
+
+  if (!keyword) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+
+  const response = await fetch(
+    `http://localhost:3000/api/search?keyword=${keyword}`
+  );
+  const json = await response.json();
+
+  if (response.status === 200) {
+    console.log(json);
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  // Pass data to the page via props
+  return { props: {} };
+}
+
+export default Search;

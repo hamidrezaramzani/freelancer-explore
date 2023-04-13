@@ -1,24 +1,42 @@
+import React, { FormEventHandler, useState } from "react";
+import { toast } from "react-toastify";
+import Router from "next/router";
 const SearchBox = () => {
+  const [keyword, setKeyword] = useState<string>("");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!keyword.length) {
+      toast("کلید واژه نمیتواند خالی باشد", {
+        type: "error",
+        position: "bottom-left",
+      });
+      return;
+    }
+
+    Router.push({
+      pathname: "/search",
+      query: {
+        keyword,
+      },
+    });
+  };
+
+  const handleChangeKeyword = (e: React.FormEvent<HTMLInputElement>) => {
+    setKeyword(e.currentTarget.value);
+  };
   return (
     <div className="w-full md:w-1/2 bg-white rounded-md h-12">
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
         <div className="w-full flex">
           <div className="w-2/12">
             <button className="w-full cursor-pointer hover:bg-indigo-600 h-12 text-center flex justify-center items-center md:text-md text-sm bg-indigo-500 rounded-md text-white font-yekan-regular">
               جستجو
             </button>
           </div>
-          <div className="w-5/12">
-            <select className="w-full hidde-expend text-slate-300 rounded-mdrounded-md bg-white h-12 text-center font-yekan-regular outline-none">
-              <option value="">نوع کار</option>
-              <option value="">گرافیک</option>
-              <option value="">برنامه نویسی و طراحی وب</option>
-              <option value="">تایپ و ترجمه</option>
-              <option value="">تولید محتوا</option>
-            </select>
-          </div>
-          <div className="w-5/12">
+          <div className="w-10/12">
             <input
+              onChange={handleChangeKeyword}
               className="w-full rounded-md placeholder:text-slate-300 bg-white h-12 text-center font-yekan-regular outline-none"
               placeholder="کلید واژه"
             />
