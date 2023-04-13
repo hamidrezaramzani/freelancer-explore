@@ -15,3 +15,11 @@
 .h-full-vh {
   height: 100vh;
 }
+
+.home-page {
+  height: calc(100vh - 300px);
+}
+
+.hidde-expend::-ms-expand {
+  display: none;
+}

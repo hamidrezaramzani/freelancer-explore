@@ -3,7 +3,11 @@ const UserMenu = () => {
   return (
     <div>
       <button>
-        <RiUser6Line fontSize={40} className="text-slate-500" />
+        <img
+          src="https://ui-avatars.com/api/?name=John+Doe"
+          width="45"
+          className="rounded-full"
+        />
       </button>
     </div>
   );
