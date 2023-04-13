@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const SearchBox = () => {
   return (
     <div className="w-full md:w-1/2 bg-white rounded-md h-12">
