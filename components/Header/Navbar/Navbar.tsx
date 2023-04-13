@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="w-2/4">
+    <div className="hidden md:inline w-2/4">
       <ul className="w-full flex justify-center text-white gap-10">
         <li>
           <Link
-            className="font-yekan-regular dark:text-white text-slate-700 text-md"
+            className="font-yekan-regular dark:hover:text-gray-200 hover:text-slate-900 dark:text-white text-slate-700 text-md"
             href="/"
           >
             خانه
@@ -15,7 +15,7 @@ const Navbar = () => {
 
         <li>
           <Link
-            className="font-yekan-regular dark:text-white text-slate-700 text-md"
+            className="font-yekan-regular dark:hover:text-gray-200 hover:text-slate-900 dark:text-white text-slate-700 text-md"
             href="/"
           >
             درباره من
@@ -24,7 +24,7 @@ const Navbar = () => {
 
         <li>
           <Link
-            className="font-yekan-regular dark:text-white text-slate-700 text-md"
+            className="font-yekan-regular dark:hover:text-gray-200 hover:text-slate-900 dark:text-white text-slate-700 text-md"
             href="/"
           >
             تماس با ما
@@ -33,7 +33,7 @@ const Navbar = () => {
 
         <li>
           <Link
-            className="font-yekan-regular dark:text-white text-slate-700 text-md"
+            className="font-yekan-regular dark:hover:text-gray-200 hover:text-slate-900 dark:text-white text-slate-700 text-md"
             href="/"
           >
             پنل کاربری

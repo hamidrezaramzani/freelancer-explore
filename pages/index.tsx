@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "@/components/Header/Header";
-import Link from "next/link";
+import SupportedFreelancingSites from "@/components/SupportedFreelancingSites/SupportedFreelancingSites";
+import SearchBox from "@/components/SearchBox/SearchBox";
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
       </Head>
       <main className="w-full h-full-vh flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700">
         <Header />
-        <div className="relative w-2/3 bg-slate-200 h- dark:bg-slate-900 home-page flex justify-center items-center p-10 rounded-md">
+        <div className="relative w-5/6 md:w-2/3 bg-slate-200 h- dark:bg-slate-900 home-page flex justify-center items-center p-10 rounded-md">
           <div className="w-full flex flex-col items-center justify-center gap-9">
             <div className="w-full text-center flex flex-col gap-2">
               <h1 className="text-3xl font-yekan-bold text-indigo-700">
@@ -25,51 +26,10 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="w-1/2 bg-white rounded-md h-12">
-              <form action="">
-                <div className="w-full flex">
-                  <div className="w-2/12">
-                    <button className="w-full cursor-pointer hover:bg-indigo-600 h-12 text-center flex justify-center items-center bg-indigo-500 rounded-md text-white font-yekan-regular">
-                      جستجو
-                    </button>
-                  </div>
-                  <div className="w-5/12">
-                    <select className="w-full hidde-expend text-slate-300 rounded-mdrounded-md bg-white h-12 text-center font-yekan-regular outline-none">
-                      <option value="">نوع کار</option>
-                    </select>
-                  </div>
-                  <div className="w-5/12">
-                    <input
-                      className="w-full rounded-md placeholder:text-slate-300 bg-white h-12 text-center font-yekan-regular outline-none"
-                      placeholder="کلید واژه"
-                    />
-                  </div>
-                </div>
-              </form>
-            </div>
+            <SearchBox />
           </div>
 
-          <div className="absolute bottom-0 py-5 gap-4 justify-center items-center right-0 w-full flex">
-            <Link href="ponisha.com">
-              <img
-                src="/logos/ponisha.png"
-                width="100"
-                height="35"
-                className="object-cover"
-                alt=""
-              />
-            </Link>
-
-            <Link href="ponisha.com">
-              <img
-                src="/logos/karlancer.png"
-                width="100"
-                height="35"
-                className="object-cover"
-                alt=""
-              />
-            </Link>
-          </div>
+          <SupportedFreelancingSites />
         </div>
       </main>
     </>
