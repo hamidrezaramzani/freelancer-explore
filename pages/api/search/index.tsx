@@ -37,8 +37,34 @@ const generateFreelancingJobs = async (
   }
   return data;
 };
+
+const sortMethods: any = {
+  highestPrice: (data: ItemType[]) => {
+    return data.sort((a: ItemType, b: ItemType) => {
+      if (Number(a.projectBudget) > Number(b.projectBudget)) {
+        return -1;
+      }
+      if (Number(a.projectBudget) < Number(b.projectBudget)) {
+        return 1;
+      }
+      return 0;
+    });
+  },
+  lowestPrice: (data: ItemType[]) => {
+    return data.sort((a: ItemType, b: ItemType) => {
+      if (Number(a.projectBudget) > Number(b.projectBudget)) {
+        return 1;
+      }
+      if (Number(a.projectBudget) < Number(b.projectBudget)) {
+        return -1;
+      }
+      return 0;
+    });
+  },
+};
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { keyword } = req.query;
+  const { keyword, sort } = req.query;
+  const sortMethod = sort ? String(sort) : "highestPrice";
   let data: ItemType[] = [];
   const websiteNames = Object.keys(websites);
   for (const websiteName of websiteNames) {
@@ -48,15 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     );
     data = data.concat(newData);
   }
-  data = data.sort((a: ItemType, b: ItemType) => {
-    if (Number(a.projectBudget) > Number(b.projectBudget)) {
-      return -1;
-    }
-    if (Number(a.projectBudget) < Number(b.projectBudget)) {
-      return 1;
-    }
-    return 0;
-  });
+  data = sortMethods[sortMethod](data);
   return res.status(200).json(data);
 };
 

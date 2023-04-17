@@ -3,7 +3,7 @@ import Header from "@/components/Header/Header";
 import Loading from "@/components/Loading/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export interface ListItemProps {
   projectTitle: string;
@@ -16,22 +16,49 @@ export interface ListItemProps {
 
 function Search() {
   const router = useRouter();
-  const { keyword } = router.query;
+  const { keyword, sort } = router.query;
+  console.log(router.query.toString());
   const [list, setList] = useState<ListItemProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [sortValue, setSort] = useState<string>("");
+  console.log(sort, sortValue);
+  const getQueryParams = () => {
+    const params = Object.keys(router.query);
+    let queries = "";
+    for (const param of params) {
+      if (!queries.length) {
+        queries += `${param}=${router.query[param]}`;
+      } else {
+        queries += `&${param}=${router.query[param]}`;
+      }
+    }
+
+    return queries;
+  };
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/search?keyword=${keyword}`
+        `http://localhost:3000/api/search?${getQueryParams()}`
       );
       const json = await response.json();
 
       setList(json);
+      setLoading(false);
     };
+
+    setSort(sort ? String(sort) : "highestPrice");
 
     if (keyword) {
       fetchData();
     }
-  }, [keyword]);
+  }, [keyword, sort]);
+
+  const handleChangeSortValue = (e: any) => {
+    router.query.sort = e.target.value;
+    router.push(router);
+    setSort(e.target.value);
+  };
   return (
     <>
       <Head>
@@ -53,8 +80,29 @@ function Search() {
               {list.length ? `${list.length} مورد پیدا شد` : ""}
             </span>
           </div>
+          <div className="w-full py-5">
+            <form action="">
+              <select
+                value={sortValue}
+                onChange={handleChangeSortValue}
+                className="h-10 font-yekan-regular w-96 rounded-md"
+              >
+                {sortValue === "highestPrice" ? (
+                  <>
+                    <option value="highestPrice">از بیشترین قیمت</option>
+                    <option value="lowestPrice">از کمترین قیمت</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="lowestPrice">از کمترین قیمت</option>
+                    <option value="highestPrice">از بیشترین قیمت</option>
+                  </>
+                )}
+              </select>
+            </form>
+          </div>
           <div className="w-full flex flex-col py-5">
-            {!list.length ? (
+            {loading ? (
               <>
                 <Loading />
                 <Loading />
@@ -64,8 +112,8 @@ function Search() {
               <></>
             )}
             {list.length
-              ? list.map((item) => {
-                  return <FreelanceItem item={item} key={item.projectTitle} />;
+              ? list.map((item, index: number) => {
+                  return <FreelanceItem item={item} key={index} />;
                 })
               : []}
           </div>
