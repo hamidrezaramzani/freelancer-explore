@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Router from "next/router";
 const SearchBox = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!keyword.length) {

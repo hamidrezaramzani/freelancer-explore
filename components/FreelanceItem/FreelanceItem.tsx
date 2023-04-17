@@ -8,8 +8,12 @@ const FreelanceItem = ({ item }: FreelanceItemProps) => {
   return (
     <div className="flex w-full mb-5">
       <div className="flex items-center">
-        <Link href="https://ponisha.com">
-          <img src="/logos/ponisha.png" className="rotate-90" width={200} />
+        <Link href="https://ponisha.ir">
+          <img
+            src={`/logos/${item.name}.png`}
+            className="rotate-90"
+            width={200}
+          />
         </Link>
       </div>
       <div className="w-full flex flex-col h-auto bg-slate-100 hover:bg-slate-300 p-5 rounded-md">
@@ -26,7 +30,11 @@ const FreelanceItem = ({ item }: FreelanceItemProps) => {
 
         <div className="w-full px-4">
           <h4 className="text-md text-indigo-700 font-yekan-bold">
-            بودجه: {item.projectBudget} ریال
+            بودجه:
+            {item.projectBudget
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+            ریال
           </h4>
         </div>
         <div className="w-full flex px-4 gap-4 py-5">

@@ -11,6 +11,7 @@ export interface ListItemProps {
   projectLink: string;
   projectTags: { title: string; link: string }[];
   projectBudget: string;
+  name: string;
 }
 
 function Search() {
@@ -27,7 +28,9 @@ function Search() {
       setList(json);
     };
 
-    fetchData();
+    if (keyword) {
+      fetchData();
+    }
   }, [keyword]);
   return (
     <>
@@ -44,7 +47,7 @@ function Search() {
         <div className="relative w-5/6 md:w-2/3 bg-white h- dark:bg-slate-900 flex flex-col justify-center items-center p-10 rounded-md">
           <div className="w-full flex justify-between">
             <h1 className="text-xl font-yekan-bold text-indigo-500">
-              جستجو کلیدواژه `${keyword}`
+              جستجو کلیدواژه `{keyword}`
             </h1>
             <span className="text-sm font-yekan-regular text-slate-400">
               {list.length ? `${list.length} مورد پیدا شد` : ""}
