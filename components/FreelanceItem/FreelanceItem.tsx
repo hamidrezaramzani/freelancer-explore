@@ -1,18 +1,25 @@
 import { ListItemProps } from "@/pages/search";
+import Image from "next/image";
 import Link from "next/link";
 
 interface FreelanceItemProps {
   item: ListItemProps;
 }
 const FreelanceItem = ({ item }: FreelanceItemProps) => {
+  const websiteLinks: { [key: string]: string } = {
+    ponisha: "https://ponisha.ir",
+    parscoders: "https://parscoders.com/",
+  };
   return (
     <div className="flex md:flex-row flex-col-reverse bg-slate-100 dark:bg-slate-700 md:bg-transparent rounded-md w-full mb-5">
       <div className="flex justify-center   py-5 md:items-center">
-        <Link href="https://ponisha.ir">
-          <img
+        <Link target="_blank" href={websiteLinks[item.name]}>
+          <Image
             src={`/logos/${item.name}.png`}
             className="md:rotate-90"
             width={200}
+            height={40}
+            alt={item.name}
           />
         </Link>
       </div>

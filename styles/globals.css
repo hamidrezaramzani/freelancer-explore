@@ -17,9 +17,13 @@
 }
 
 .home-page {
-  height: calc(100vh - 300px);
+  height: calc(100vh);
 }
 
 .hidde-expend::-ms-expand {
   display: none;
+}
+
+body {
+  overflow-x: hidden !important;
 }

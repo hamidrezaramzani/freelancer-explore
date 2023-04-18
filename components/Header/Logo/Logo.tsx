@@ -3,7 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 const Logo = () => {
   return (
     <div className="w-2/4 md:w-1/4 flex items-center gap-3">
-      <button>
+      <button className="md:hidden inline">
         <AiOutlineMenu fontSize={25} />
       </button>
       <Link

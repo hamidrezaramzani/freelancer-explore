@@ -4,7 +4,7 @@ import Loading from "@/components/Loading/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-
+import SearchBox from "../../components/SearchBox/SearchBox";
 export interface ListItemProps {
   projectTitle: string;
   projectDescription: string;
@@ -33,15 +33,42 @@ function Search() {
 
     return queries;
   };
+
+  const sortMethods: any = {
+    highestPrice: (data: any[]) => {
+      return data.sort((a: any, b: any) => {
+        if (Number(a.projectBudget) > Number(b.projectBudget)) {
+          return -1;
+        }
+        if (Number(a.projectBudget) < Number(b.projectBudget)) {
+          return 1;
+        }
+        return 0;
+      });
+    },
+    lowestPrice: (data: any[]) => {
+      return data.sort((a: any, b: any) => {
+        if (Number(a.projectBudget) > Number(b.projectBudget)) {
+          return 1;
+        }
+        if (Number(a.projectBudget) < Number(b.projectBudget)) {
+          return -1;
+        }
+        return 0;
+      });
+    },
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const response = await fetch(
         `http://localhost:3000/api/search?${getQueryParams()}`
       );
-      const json = await response.json();
-
-      setList(json);
+      const searchedList = await response.json();
+      const sortedList =
+        sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
+      setList(sortedList);
       setLoading(false);
     };
 
@@ -50,12 +77,18 @@ function Search() {
     if (keyword) {
       fetchData();
     }
-  }, [keyword, sort]);
+  }, [keyword]);
 
   const handleChangeSortValue = (e: any) => {
+    const sortedData = sortMethods[e.target.value](list);
+    setList(sortedData);
+    setSort(e.target.value);
     router.query.sort = e.target.value;
     router.push(router);
-    setSort(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    setList([]);
   };
   return (
     <>
@@ -79,24 +112,37 @@ function Search() {
             </span>
           </div>
           <div className="w-full py-5">
+            <SearchBox
+              searchValue={String(keyword)}
+              onFormSubmit={handleSearchSubmit}
+            />
+            <br />
             <form action="">
-              <select
-                value={sortValue}
-                onChange={handleChangeSortValue}
-                className="h-10 font-yekan-regular w-96 rounded-md"
-              >
-                {sortValue === "highestPrice" ? (
-                  <>
-                    <option value="highestPrice">از بیشترین قیمت</option>
-                    <option value="lowestPrice">از کمترین قیمت</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="lowestPrice">از کمترین قیمت</option>
-                    <option value="highestPrice">از بیشترین قیمت</option>
-                  </>
-                )}
-              </select>
+              <div className="w-full items-center gap-3 flex">
+                <div className="w-2/6 md:w-1/6">
+                  <span className="font-yekan-regular">مرتب سازی:</span>
+                </div>
+                <div className="w-4/6 md:w-1/6">
+                  <select
+                    value={sortValue}
+                    disabled={loading}
+                    onChange={handleChangeSortValue}
+                    className="h-10 font-yekan-regular w-full bg-slate-100 dark:bg-slate-700 dark:text-white md:w-96 rounded-md"
+                  >
+                    {sortValue === "highestPrice" ? (
+                      <>
+                        <option value="highestPrice">از بیشترین قیمت</option>
+                        <option value="lowestPrice">از کمترین قیمت</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="lowestPrice">از کمترین قیمت</option>
+                        <option value="highestPrice">از بیشترین قیمت</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+              </div>
             </form>
           </div>
           <div className="w-full flex flex-col py-5">
