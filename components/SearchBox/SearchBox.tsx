@@ -26,7 +26,7 @@ const SearchBox = () => {
     setKeyword(e.currentTarget.value);
   };
   return (
-    <div className="w-full md:w-1/2 bg-white rounded-md h-12">
+    <div className="w-full md:w-1/2 dark:bg-slate-700 bg-white rounded-md h-12">
       <form action="" onSubmit={handleSubmit}>
         <div className="w-full flex">
           <div className="w-2/12">
@@ -37,7 +37,7 @@ const SearchBox = () => {
           <div className="w-10/12">
             <input
               onChange={handleChangeKeyword}
-              className="w-full rounded-md placeholder:text-slate-300 bg-white h-12 text-center font-yekan-regular outline-none"
+              className="w-full rounded-md placeholder:text-slate-300 dark:bg-slate-700 bg-white h-12 text-center font-yekan-regular outline-none"
               placeholder="کلید واژه"
             />
           </div>
