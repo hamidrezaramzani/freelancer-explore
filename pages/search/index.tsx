@@ -17,11 +17,9 @@ export interface ListItemProps {
 function Search() {
   const router = useRouter();
   const { keyword, sort } = router.query;
-  console.log(router.query.toString());
   const [list, setList] = useState<ListItemProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortValue, setSort] = useState<string>("");
-  console.log(sort, sortValue);
   const getQueryParams = () => {
     const params = Object.keys(router.query);
     let queries = "";

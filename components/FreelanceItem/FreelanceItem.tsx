@@ -6,7 +6,7 @@ interface FreelanceItemProps {
 }
 const FreelanceItem = ({ item }: FreelanceItemProps) => {
   return (
-    <div className="flex md:flex-row flex-col-reverse bg-slate-100 md:bg-transparent rounded-md w-full mb-5">
+    <div className="flex md:flex-row flex-col-reverse bg-slate-100 dark:bg-slate-700 md:bg-transparent rounded-md w-full mb-5">
       <div className="flex justify-center   py-5 md:items-center">
         <Link href="https://ponisha.ir">
           <img
@@ -16,20 +16,20 @@ const FreelanceItem = ({ item }: FreelanceItemProps) => {
           />
         </Link>
       </div>
-      <div className="w-full flex flex-col h-auto bg-slate-100 hover:bg-slate-300 p-5 rounded-md">
+      <div className="w-full flex flex-col h-auto bg-slate-100 dark:bg-slate-700 hover:bg-slate-300 p-5 rounded-md">
         <Link target="_blank" href={item.projectLink}>
           <div className="px-4 flex flex-col gap-1">
-            <h3 className="font-yekan-bold text-xl text-slate-600">
+            <h3 className="font-yekan-bold text-xl text-slate-600 dark:text-slate-50">
               {item.projectTitle}
             </h3>
-            <p className="py-2 font-yekan-regular text-sm text-slate-500">
+            <p className="py-2 font-yekan-regular text-sm text-slate-500 dark:text-slate-400">
               {item.projectDescription}
             </p>
           </div>
         </Link>
 
         <div className="w-full px-4">
-          <h4 className="text-md text-indigo-700 font-yekan-bold">
+          <h4 className="text-md text-indigo-700 dark:text-indigo-400 font-yekan-bold">
             بودجه:
             {item.projectBudget
               .toString()
@@ -41,7 +41,7 @@ const FreelanceItem = ({ item }: FreelanceItemProps) => {
           {item.projectTags.map((tag, index) => (
             <div
               key={index}
-              className="p-2 border border-indigo-700 rounded-md font-yekan-regular text-sm text-indigo-700"
+              className="p-2 border  rounded-md font-yekan-regular text-sm border-indigo-700 text-indigo-700 dark:border-indigo-400 dark:text-indigo-400"
             >
               <Link href={tag.link}>{tag.title}</Link>
             </div>
