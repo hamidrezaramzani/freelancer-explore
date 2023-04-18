@@ -6,12 +6,12 @@ interface FreelanceItemProps {
 }
 const FreelanceItem = ({ item }: FreelanceItemProps) => {
   return (
-    <div className="flex w-full mb-5">
-      <div className="flex items-center">
+    <div className="flex md:flex-row flex-col-reverse bg-slate-100 md:bg-transparent rounded-md w-full mb-5">
+      <div className="flex justify-center   py-5 md:items-center">
         <Link href="https://ponisha.ir">
           <img
             src={`/logos/${item.name}.png`}
-            className="rotate-90"
+            className="md:rotate-90"
             width={200}
           />
         </Link>
@@ -37,7 +37,7 @@ const FreelanceItem = ({ item }: FreelanceItemProps) => {
             ریال
           </h4>
         </div>
-        <div className="w-full flex px-4 gap-4 py-5">
+        <div className="w-full flex flex-wrap px-4 gap-4 py-5">
           {item.projectTags.map((tag, index) => (
             <div
               key={index}
