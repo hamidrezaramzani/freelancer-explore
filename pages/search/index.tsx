@@ -112,10 +112,7 @@ function Search() {
             </span>
           </div>
           <div className="w-full py-5">
-            <SearchBox
-              searchValue={String(keyword)}
-              onFormSubmit={handleSearchSubmit}
-            />
+            <SearchBox onFormSubmit={handleSearchSubmit} />
             <br />
             <form action="">
               <div className="w-full items-center gap-3 flex">

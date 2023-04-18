@@ -8,7 +8,7 @@ const Logo = () => {
       </button>
       <Link
         href="/"
-        className="font-yekan-bold text-indigo-700 text-md md:text-xl"
+        className="font-yekan-bold text-indigo-700 dark:text-indigo-600 text-md md:text-xl animate-bounce"
       >
         فریلنس اکسپلور
       </Link>
