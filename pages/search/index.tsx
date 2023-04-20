@@ -119,7 +119,7 @@ function Search() {
       });
     } else if (!loading && error) {
       return (
-        <div className="flex flex-col justify-center w-full h-96 items-center">
+        <div className="flex flex-col items-center justify-center w-full h-96">
           <span>
             <RiSignalWifiErrorLine fontSize={100} className="text-indigo-600" />
           </span>
@@ -130,7 +130,7 @@ function Search() {
       );
     } else if (!loading && !error && !list.length) {
       return (
-        <div className="flex flex-col justify-center w-full h-96 items-center">
+        <div className="flex flex-col items-center justify-center w-full h-96">
           <span>
             <TbError404 fontSize={100} className="text-indigo-600" />
           </span>
@@ -155,7 +155,7 @@ function Search() {
         className={`w-full flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700`}
       >
         <Header />
-        <div className="relative flex flex-col items-center justify-center w-11/12 p-10 bg-white rounded-md md:w-2/3 h- dark:bg-slate-900">
+        <div className="relative flex flex-col items-center justify-center w-11/12 px-5 py-10 bg-white rounded-md md:p-10 md:w-2/3 h- dark:bg-slate-900">
           <div className="flex justify-between w-full">
             <h1 className="text-xl text-indigo-500 font-yekan-bold">
               جستجو کلیدواژه `{keyword}`
