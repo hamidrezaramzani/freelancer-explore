@@ -22,9 +22,8 @@ const generateFreelancingJobs = async (
     );
 
     const data: ItemType[] = [];
-    for (const item of (container as any).querySelectorAll(
-      config.selectors.item
-    )) {
+    const items = (container as any).querySelectorAll(config.selectors.item);
+    for (const item of items) {
       if (config.selectors.budget(item)) {
         const generatedItem: any = {
           projectTitle: item.querySelector(config.selectors.title)?.innerHTML,

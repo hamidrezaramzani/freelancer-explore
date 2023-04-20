@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import axios from "axios";
+import { TbError404 } from "react-icons/tb";
+import { RiSignalWifiErrorLine } from "react-icons/ri";
 export interface ListItemProps {
   projectTitle: string;
   projectDescription: string;
@@ -20,6 +22,7 @@ function Search() {
   const { keyword, sort } = router.query;
   const [list, setList] = useState<ListItemProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const [sortValue, setSort] = useState<string>("");
   const getQueryParams = () => {
     const params = Object.keys(router.query);
@@ -62,14 +65,20 @@ function Search() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const { data: searchedList } = await axios.get(
-        `/api/search?${getQueryParams()}`
-      );
-      const sortedList =
-        sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
-      setList(sortedList);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const { data: searchedList, status } = await axios.get(
+          `/api/search?${getQueryParams()}`
+        );
+        const sortedList =
+          sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
+        setList(sortedList);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+        setLoading(false);
+      }
     };
 
     setSort(sort ? String(sort) : "highestPrice");
@@ -104,11 +113,35 @@ function Search() {
   };
 
   const renderList = () => {
-    return list.length
-      ? list.map((item, index: number) => {
-          return <FreelanceItem item={item} key={index} />;
-        })
-      : [];
+    if (!loading && !error && list.length) {
+      return list.map((item, index: number) => {
+        return <FreelanceItem item={item} key={index} />;
+      });
+    } else if (!loading && error) {
+      return (
+        <div className="flex flex-col justify-center w-full h-96 items-center">
+          <span>
+            <RiSignalWifiErrorLine fontSize={100} className="text-indigo-600" />
+          </span>
+          <h2 className="text-indigo-500 font-yekan-bold">
+            خطایی پیش آمده است. لطفا اطلاع دهید
+          </h2>
+        </div>
+      );
+    } else if (!loading && !error && !list.length) {
+      return (
+        <div className="flex flex-col justify-center w-full h-96 items-center">
+          <span>
+            <TbError404 fontSize={100} className="text-indigo-600" />
+          </span>
+          <h2 className="text-indigo-500 font-yekan-bold">
+            نتونستیم چیزی که میخوای رو پیدا کنیم
+          </h2>
+        </div>
+      );
+    }
+
+    return [];
   };
   return (
     <>
