@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
+import axios from "axios";
 export interface ListItemProps {
   projectTitle: string;
   projectDescription: string;
@@ -62,10 +63,9 @@ function Search() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const response = await fetch(
+      const { data: searchedList } = await axios.get(
         `http://localhost:3000/api/search?${getQueryParams()}`
       );
-      const searchedList = await response.json();
       const sortedList =
         sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
       setList(sortedList);
@@ -89,6 +89,26 @@ function Search() {
 
   const handleSearchSubmit = () => {
     setList([]);
+  };
+
+  const renderLoading = () => {
+    return loading ? (
+      <>
+        <Loading />
+        <Loading />
+        <Loading />
+      </>
+    ) : (
+      <></>
+    );
+  };
+
+  const renderList = () => {
+    return list.length
+      ? list.map((item, index: number) => {
+          return <FreelanceItem item={item} key={index} />;
+        })
+      : [];
   };
   return (
     <>
@@ -143,20 +163,8 @@ function Search() {
             </form>
           </div>
           <div className="w-full flex flex-col py-5">
-            {loading ? (
-              <>
-                <Loading />
-                <Loading />
-                <Loading />
-              </>
-            ) : (
-              <></>
-            )}
-            {list.length
-              ? list.map((item, index: number) => {
-                  return <FreelanceItem item={item} key={index} />;
-                })
-              : []}
+            {renderLoading()}
+            {renderList()}
           </div>
         </div>
       </main>
