@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
       <main className="w-full h-full-vh flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700">
         <Header />
-        <div className="relative w-5/6 md:w-2/3 bg-slate-200  dark:bg-slate-900 flex flex-col gap-10 home-page justify-center items-center p-10 rounded-md">
+        <div className="relative w-11/12 md:w-2/3 bg-slate-200  dark:bg-slate-900 flex flex-col gap-10 home-page justify-center items-center p-10 rounded-md">
           <div className="w-full flex flex-col items-center justify-center gap-9">
             <div className="w-full text-center flex flex-col gap-2">
               <h1 className="text-3xl font-yekan-bold text-indigo-700">
