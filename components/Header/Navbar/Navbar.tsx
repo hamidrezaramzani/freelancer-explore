@@ -4,7 +4,7 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <div className="hidden w-2/4 md:inline">
-      <ul className="flex justify-center w-full gap-10 text-white">
+      <ul className="flex justify-center w-full gap-10 text-slate-800 dark:text-indigo-400">
         {renderNavbarItems()}
       </ul>
     </div>

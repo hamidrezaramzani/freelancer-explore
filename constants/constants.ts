@@ -16,8 +16,4 @@ export const LINKS: NavbarItemType[] = [
         title: "تماس با ما",
         link: "/contact-us"
     },
-    {
-        title: "قوانین و مقررات",
-        link: "/faq"
-    },
 ];

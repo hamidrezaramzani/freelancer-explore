@@ -38,13 +38,15 @@
     <a href="https://github.com/hamidrezaramzani/freelancer-explore"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/hamidrezaramzani/freelancer-explore">View Demo</a>
+    <a href="https://freelancerexplore.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/hamidrezaramzani/freelancer-explore/issues">Report Bug</a>
     ·
     <a href="https://github.com/hamidrezaramzani/freelancer-explore/issues">Request Feature</a>
   </p>
 </div>
+
+![ProjectScreenShot](./freelancerexplore-screenshot.jpg)
 
 ### Built With
 
@@ -61,10 +63,9 @@
    git clone https://github.com/hamidrezaramzani/freelancer-explore.git
    ```
 2. Install NPM packages
-   ````sh
+   ```sh
    npm install
-   ```  ```
-   ````
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
