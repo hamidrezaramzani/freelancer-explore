@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 const Logo = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleToggleOpenDrawer = () => {
     setOpen((prevOpen) => !prevOpen);
