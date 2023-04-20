@@ -64,7 +64,7 @@ function Search() {
     const fetchData = async () => {
       setLoading(true);
       const { data: searchedList } = await axios.get(
-        `http://localhost:3000/api/search?${getQueryParams()}`
+        `/api/search?${getQueryParams()}`
       );
       const sortedList =
         sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
