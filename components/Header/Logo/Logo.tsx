@@ -1,17 +1,14 @@
 import Drawer from "@/components/Drawer/Drawer";
+import { DrawerContext } from "@/context/DrawerProvider";
 import { renderNavbarItems } from "@/helpers/renderNavbarList";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 const Logo = () => {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleToggleOpenDrawer = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+  const { open, setOpen } = useContext(DrawerContext);
   return (
     <div className="flex items-center w-2/4 gap-3 md:w-1/4">
-      <button className="inline md:hidden" onClick={handleToggleOpenDrawer}>
+      <button className="inline md:hidden" onClick={() => setOpen!(true)}>
         <AiOutlineMenu fontSize={25} />
       </button>
       <Link
@@ -21,7 +18,7 @@ const Logo = () => {
         فریلنس اکسپلور
       </Link>
       <Drawer isOpen={open} setIsOpen={setOpen}>
-        {renderNavbarItems()}
+        {renderNavbarItems(true)}
       </Drawer>
     </div>
   );

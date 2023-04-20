@@ -5,11 +5,11 @@ import { AiOutlineMenuFold } from "react-icons/ai";
 interface DrawerProps {
   children: ReactNode;
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>> | undefined;
 }
 export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
   const close = () => {
-    setIsOpen(false);
+    setIsOpen!(false);
   };
   return (
     <main
