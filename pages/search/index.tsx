@@ -8,6 +8,7 @@ import SearchBox from "../../components/SearchBox/SearchBox";
 import axios from "axios";
 import { TbError404 } from "react-icons/tb";
 import { RiSignalWifiErrorLine } from "react-icons/ri";
+import { useQuery } from "react-query";
 export interface ListItemProps {
   projectTitle: string;
   projectDescription: string;
@@ -20,9 +21,6 @@ export interface ListItemProps {
 function Search() {
   const router = useRouter();
   const { keyword, sort } = router.query;
-  const [list, setList] = useState<ListItemProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
   const [sortValue, setSort] = useState<string>("");
   const getQueryParams = () => {
     const params = Object.keys(router.query);
@@ -38,9 +36,13 @@ function Search() {
     return queries;
   };
 
-  const sortMethods: any = {
-    highestPrice: (data: any[]) => {
-      return data.sort((a: any, b: any) => {
+  interface SortMethodsType {
+    [key: string]: (list: ListItemProps[]) => ListItemProps[];
+  }
+
+  const sortMethods: SortMethodsType = {
+    highestPrice: (list: any[]) => {
+      return list.sort((a: any, b: any) => {
         if (Number(a.projectBudget) > Number(b.projectBudget)) {
           return -1;
         }
@@ -50,8 +52,8 @@ function Search() {
         return 0;
       });
     },
-    lowestPrice: (data: any[]) => {
-      return data.sort((a: any, b: any) => {
+    lowestPrice: (list: any[]) => {
+      return list.sort((a: any, b: any) => {
         if (Number(a.projectBudget) > Number(b.projectBudget)) {
           return 1;
         }
@@ -62,46 +64,28 @@ function Search() {
       });
     },
   };
+  const {
+    data: list,
+    isError,
+    isLoading,
+  } = useQuery(["list", keyword], async () => {
+    return await (
+      await axios.get(`/api/search?${getQueryParams()}`)
+    ).data;
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data: searchedList, status } = await axios.get(
-          `/api/search?${getQueryParams()}`
-        );
-        const sortedList =
-          sortMethods[sort ? String(sort) : "highestPrice"](searchedList);
-        setList(sortedList);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setError(true);
-        setLoading(false);
-      }
-    };
-
-    setSort(sort ? String(sort) : "highestPrice");
-
-    if (keyword) {
-      fetchData();
-    }
-  }, [keyword]);
+  const sortMethod = sort ? String(sort) : "highestPrice";
 
   const handleChangeSortValue = (e: any) => {
     const sortedData = sortMethods[e.target.value](list);
-    setList(sortedData);
     setSort(e.target.value);
     router.query.sort = e.target.value;
     router.push(router);
-  };
-
-  const handleSearchSubmit = () => {
-    setList([]);
+    return sortedData;
   };
 
   const renderLoading = () => {
-    return loading ? (
+    return isLoading ? (
       <>
         <Loading />
         <Loading />
@@ -113,11 +97,11 @@ function Search() {
   };
 
   const renderList = () => {
-    if (!loading && !error && list.length) {
-      return list.map((item, index: number) => {
+    if (!isLoading && !isError && list.length) {
+      return sortMethods[sortMethod](list).map((item: any, index: number) => {
         return <FreelanceItem item={item} key={index} />;
       });
-    } else if (!loading && error) {
+    } else if (!isLoading && isError) {
       return (
         <div className="flex flex-col items-center justify-center w-full h-96">
           <span>
@@ -128,7 +112,7 @@ function Search() {
           </h2>
         </div>
       );
-    } else if (!loading && !error && !list.length) {
+    } else if (!isLoading && !isError && !list.length) {
       return (
         <div className="flex flex-col items-center justify-center w-full h-96">
           <span>
@@ -161,11 +145,11 @@ function Search() {
               جستجو کلیدواژه `{keyword}`
             </h1>
             <span className="text-sm font-yekan-regular text-slate-400">
-              {list.length ? `${list.length} مورد پیدا شد` : ""}
+              {list && list.length ? `${list.length} مورد پیدا شد` : ""}
             </span>
           </div>
           <div className="w-full py-5">
-            <SearchBox onFormSubmit={handleSearchSubmit} />
+            <SearchBox />
             <br />
             <form action="">
               <div className="flex items-center w-full gap-3">
@@ -175,7 +159,7 @@ function Search() {
                 <div className="w-4/6 md:w-1/6">
                   <select
                     value={sortValue}
-                    disabled={loading}
+                    disabled={isLoading}
                     onChange={handleChangeSortValue}
                     className="w-full h-10 rounded-md font-yekan-regular bg-slate-100 dark:bg-slate-700 dark:text-white md:w-96"
                   >
