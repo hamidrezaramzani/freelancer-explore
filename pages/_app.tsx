@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import DrawerProvider from "@/context/DrawerProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useRef } from "react";
+import SearchHistoryProvider from "@/context/SearchHistoryProvider";
 export default function App({ Component, pageProps }: AppProps) {
   const queryClientRef = useRef<QueryClient>();
 
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   }
   return (
+    <SearchHistoryProvider>
     <DrawerProvider>
       <ThemeProvider
         attribute="class"
@@ -33,5 +35,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <ToastContainer />
       </ThemeProvider>
     </DrawerProvider>
+    </SearchHistoryProvider>
   );
 }

@@ -3,7 +3,7 @@ import Header from "@/components/Header/Header";
 import Loading from "@/components/Loading/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import axios from "axios";
 import { TbError404 } from "react-icons/tb";
@@ -37,6 +37,7 @@ function Search() {
   };
 
   interface SortMethodsType {
+    // eslint-disable-next-line no-unused-vars
     [key: string]: (list: ListItemProps[]) => ListItemProps[];
   }
 

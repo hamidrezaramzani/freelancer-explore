@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-unused-vars": "error",
+    "no-unused-labels": "error",
+    "no-unused-expressions": "error",
+    "no-console": "error",
+    "semi": "error"
+  }
 }

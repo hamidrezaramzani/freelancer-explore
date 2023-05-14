@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 
 export interface TagType {
@@ -99,7 +100,7 @@ const configList: any = {
             },
         },
     },
-}
+};
 export const websites: any = {
     ponisha: () => {
         return configList.ponisha;

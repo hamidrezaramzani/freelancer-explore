@@ -1,11 +1,16 @@
-import React, { FormEventHandler, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Router, { useRouter } from "next/router";
+import SearchHistory from "./SearchHistory/SearchHistory";
+import HistorySearch from "@/helpers/historySearch";
+import { SearchHistoryContext } from "@/context/SearchHistoryProvider";
 interface SearchBoxProps {
   onFormSubmit?: () => void;
 }
 const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
   const router = useRouter();
+  const { setHistories } = useContext(SearchHistoryContext);
+  const [showSearchHistory, setShowSearchHistory] = useState(false);
   const { keyword: keywordParam } = router.query;
 
   const [keyword, setKeyword] = useState<string>("");
@@ -14,6 +19,8 @@ const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
       setKeyword(String(keywordParam));
     }
   }, [keywordParam]);
+
+  const historySearch = new HistorySearch();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -29,6 +36,8 @@ const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
       onFormSubmit();
     }
 
+    historySearch.save(keyword);
+    setHistories!(historySearch.getAll());
     Router.push({
       pathname: "/search",
       query: {
@@ -49,12 +58,18 @@ const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
               جستجو
             </button>
           </div>
-          <div className="w-8/12 md:w-10/12">
+          <div className="w-8/12 md:w-10/12 relative">
             <input
               value={keyword}
               onChange={handleChangeKeyword}
               className="w-full rounded-md placeholder:text-slate-300 dark:bg-slate-700 bg-slate-50 h-12 text-center font-yekan-regular outline-none"
               placeholder="کلید واژه"
+              onFocus={() => setShowSearchHistory(true)}
+            />
+            <SearchHistory
+              keyword={keyword}
+              show={showSearchHistory}
+              setShow={setShowSearchHistory}
             />
           </div>
         </div>
