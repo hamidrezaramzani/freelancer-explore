@@ -41,13 +41,12 @@ const generateFreelancingJobs = async (
     }
     return data;
   } catch (error) {
-    console.log(error);
     return [];
   }
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { keyword, sort } = req.query;
+  const { keyword } = req.query;
   let data: ItemType[] = [];
   const websiteNames = Object.keys(websites);
   for (const websiteName of websiteNames) {

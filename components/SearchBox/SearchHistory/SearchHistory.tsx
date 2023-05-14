@@ -25,7 +25,7 @@ const SearchHistory = ({ show, setShow }: SearchHistoryProps) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, setShow]);
 
 
   const handleClick = (keyword: string) => {

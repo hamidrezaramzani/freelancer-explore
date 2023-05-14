@@ -1,4 +1,3 @@
-import { CgSpinner } from "react-icons/cg";
 const Loading = () => {
   return (
     <div

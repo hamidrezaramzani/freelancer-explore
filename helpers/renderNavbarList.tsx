@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useContext } from "react";
 
 export const renderNavbarItems = (isMobile?: boolean) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { setOpen } = useContext(DrawerContext);
-  const closeDrawer = (e: React.MouseEvent<HTMLElement>) => {
+  const closeDrawer = () => {
     if (isMobile) {
       setOpen!(false);
     }

@@ -1,5 +1,4 @@
 import { renderNavbarItems } from "@/helpers/renderNavbarList";
-import Link from "next/link";
 
 const Navbar = () => {
   return (
