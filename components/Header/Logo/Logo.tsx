@@ -2,7 +2,7 @@ import Drawer from "@/components/Drawer/Drawer";
 import { DrawerContext } from "@/context/DrawerProvider";
 import { renderNavbarItems } from "@/helpers/renderNavbarList";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 const Logo = () => {
   const { open, setOpen } = useContext(DrawerContext);
@@ -13,7 +13,7 @@ const Logo = () => {
       </button>
       <Link
         href="/"
-        className="text-indigo-700 font-yekan-bold dark:text-indigo-600 text-md md:text-xl animate-bounce"
+        className="text-indigo-700 font-yekan-bold dark:text-indigo-600 text-md md:text-xl animate-pulse"
       >
         فریلنس اکسپلور
       </Link>

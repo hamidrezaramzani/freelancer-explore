@@ -42,7 +42,7 @@ const SearchHistory = ({ show, setShow }: SearchHistoryProps) => {
     return histories.length ? (
       histories.map((item: HistorySearchItemProps) => (
         <div
-          className="w-full flex items-center justify-around py-3 dark:hover:bg-slate-600 px-3 rounded-md transition-all"
+          className="w-full flex items-center justify-around py-3 hover:bg-indigo-300 dark:hover:bg-slate-600 px-3 rounded-md transition-all"
           key={item.title}
         >
           <a
@@ -74,7 +74,7 @@ const SearchHistory = ({ show, setShow }: SearchHistoryProps) => {
   };
   return show ? (
     <div
-      className="w-full z-50 bg-indigo-300 drop-shadow-lg dark:bg-slate-500 rounded-md top-44 p-2 left-0"
+      className="w-full z-50 bg-indigo-200 drop-shadow-lg dark:bg-slate-500 rounded-md top-44 p-2 left-0"
       ref={ref}
     >
       {renderHistorySearchItems()}
