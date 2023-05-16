@@ -38,6 +38,7 @@ const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
 
     historySearch.save(keyword);
     setHistories!(historySearch.getAll());
+    setShowSearchHistory(false);
     Router.push({
       pathname: "/search",
       query: {
@@ -52,13 +53,13 @@ const SearchBox = ({ onFormSubmit }: SearchBoxProps) => {
   return (
     <div className="w-full md:w-1/2 dark:bg-slate-700 bg-white rounded-md h-12">
       <form action="" onSubmit={handleSubmit}>
-        <div className="w-full flex">
+        <div className="w-full flex relative">
           <div className="w-4/12 md:w-2/12">
             <button className="w-full cursor-pointer hover:bg-indigo-600 h-12 text-center flex justify-center items-center md:text-md text-sm bg-indigo-500 rounded-md text-white font-yekan-regular">
               جستجو
             </button>
           </div>
-          <div className="w-8/12 md:w-10/12 relative">
+          <div className="w-8/12 md:w-10/12">
             <input
               value={keyword}
               onChange={handleChangeKeyword}

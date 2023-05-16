@@ -74,7 +74,7 @@ const SearchHistory = ({ show, setShow }: SearchHistoryProps) => {
   };
   return show ? (
     <div
-      className="w-full z-50 bg-indigo-200 drop-shadow-lg dark:bg-slate-500 rounded-md top-44 p-2 left-0"
+      className="w-full z-50 bg-indigo-200 drop-shadow-lg dark:bg-slate-500 rounded-md p-2 left-0 absolute top-14"
       ref={ref}
     >
       {renderHistorySearchItems()}
