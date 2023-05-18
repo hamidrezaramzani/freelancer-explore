@@ -78,7 +78,7 @@ const configList: any = {
                     .forEach((item: Element) => {
                         const tag = {
                             title: item.innerHTML,
-                            link: item.getAttribute("href"),
+                            link: `https://parscoders.com/${item.getAttribute("href")}`,
                         };
 
                         tags.push(tag);
