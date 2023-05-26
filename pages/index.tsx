@@ -2,8 +2,14 @@ import Head from "next/head";
 import Header from "@/components/Header/Header";
 import SupportedFreelancingSites from "@/components/SupportedFreelancingSites/SupportedFreelancingSites";
 import SearchBox from "@/components/SearchBox/SearchBox";
+import { GetServerSideProps } from "next";
+import { withIronSessionSsr } from "iron-session/next";
+import ironSessionOptions from "@/helpers/ironSessionOptions";
 
-export default function Home() {
+interface HomeProps {
+  isLogged: boolean;
+}
+function Home({ isLogged }: HomeProps) {
   return (
     <>
       <Head>
@@ -16,7 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="w-full h-full-vh flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700">
-        <Header />
+        <Header isLogged={isLogged} />
         <div className="relative w-11/12 md:w-2/3 bg-slate-200  dark:bg-slate-900 flex flex-col gap-10 home-page justify-center items-center p-10 rounded-md">
           <div className="w-full flex flex-col items-center justify-center gap-9">
             <div className="w-full text-center flex flex-col gap-2">
@@ -38,3 +44,26 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
+  async ({ req }) => {
+    const user = (req.session as any).user;
+
+    if (!user) {
+      return {
+        props: {
+          isLogged: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        isLogged: true,
+      },
+    };
+  },
+  ironSessionOptions
+);
+
+export default Home;

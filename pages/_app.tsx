@@ -23,18 +23,22 @@ export default function App({ Component, pageProps }: AppProps) {
   }
   return (
     <SearchHistoryProvider>
-    <DrawerProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        themes={["light", "dark"]}
-      >
-        <QueryClientProvider client={queryClientRef.current}>
-          <Component {...pageProps} />
-        </QueryClientProvider>
-        <ToastContainer />
-      </ThemeProvider>
-    </DrawerProvider>
+      <DrawerProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          themes={["light", "dark"]}
+        >
+          <QueryClientProvider client={queryClientRef.current}>
+            <Component {...pageProps} />
+          </QueryClientProvider>
+          <ToastContainer
+            bodyClassName="font-yekan-regular"
+            theme="dark"
+            position="bottom-left"
+          />
+        </ThemeProvider>
+      </DrawerProvider>
     </SearchHistoryProvider>
   );
 }
