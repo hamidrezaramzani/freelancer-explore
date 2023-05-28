@@ -11,6 +11,9 @@ export interface ItemType {
     projectBudget: string;
     projectLink: string;
     projectTags: { title: string; link: string };
+    name: string;
+    hash: string;
+    isSaved: boolean;
 }
 export interface InputConfigType {
     address: string;

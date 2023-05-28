@@ -9,6 +9,9 @@ import axios from "axios";
 import { TbError404 } from "react-icons/tb";
 import { RiSignalWifiErrorLine } from "react-icons/ri";
 import { useQuery } from "react-query";
+import { GetServerSideProps } from "next";
+import { withIronSessionSsr } from "iron-session/next";
+import ironSessionOptions from "@/helpers/ironSessionOptions";
 export interface ListItemProps {
   projectTitle: string;
   projectDescription: string;
@@ -16,9 +19,14 @@ export interface ListItemProps {
   projectTags: { title: string; link: string }[];
   projectBudget: string;
   name: string;
+  isSaved: boolean;
 }
 
-function Search() {
+interface SearchProps {
+  isLogged: boolean;
+}
+
+function Search({ isLogged }: SearchProps) {
   const router = useRouter();
   const { keyword, sort } = router.query;
   const [sortValue, setSort] = useState<string>("");
@@ -100,7 +108,9 @@ function Search() {
   const renderList = () => {
     if (!isLoading && !isError && list.length) {
       return sortMethods[sortMethod](list).map((item: any, index: number) => {
-        return <FreelanceItem item={item} key={index} />;
+        return (
+          <FreelanceItem keyword={String(keyword)} isLogged={isLogged} item={item} key={index} />
+        );
       });
     } else if (!isLoading && isError) {
       return (
@@ -139,7 +149,7 @@ function Search() {
       <main
         className={`w-full flex flex-col items-center bg-gradient-to-r  bg-slate-100 dark:from-slate-900 dark:to-slate-700`}
       >
-        <Header />
+        <Header isLogged={isLogged} />
         <div className="relative flex flex-col items-center justify-center w-11/12 px-5 py-10 bg-white rounded-md md:p-10 md:w-2/3 h- dark:bg-slate-900">
           <div className="flex justify-between w-full">
             <h1 className="text-xl text-indigo-500 font-yekan-bold">
@@ -189,5 +199,26 @@ function Search() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
+  async ({ req }) => {
+    const user = (req.session as any).user;
+
+    if (!user) {
+      return {
+        props: {
+          isLogged: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        isLogged: true,
+      },
+    };
+  },
+  ironSessionOptions
+);
 
 export default Search;

@@ -25,7 +25,7 @@ const UserMenu = ({ children, isLogged }: UserMenuProps) => {
       {isLogged && (
         <div>
           <Image
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsp-images.summitpost.org%2F1038746.jpg%3Fauto%3Dformat%26fit%3Dmax%26ixlib%3Dphp-2.1.1%26q%3D35%26w%3D1024%26s%3D394ed8f3158db7ef966a1b238d293e8b&f=1&nofb=1&ipt=cae0dfc330c5919f56352e9ea2f339073bc3ca6ac1c0d681b6545f4032c1f962&ipo=images"
+            src="/images/avatar.png"
             alt="random"
             width={80}
             height={80}
