@@ -1,11 +1,14 @@
 import Saved from "@/database/Models/Saved";
 import { NextApiRequest, NextApiResponse } from "next";
 import digest from "@/helpers/digest";
+import { withIronSessionApiRoute } from 'iron-session/next';
+import ironSessionOptions from '@/helpers/ironSessionOptions';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const body = req.body;
         const id: string = body.projectLink.split("/")[4];
-
+        const userId = (req.session as any).user.id;
+        body.user = userId;
         const hash = await digest({ message: `${id}${body.name}` });
         const saved = await Saved.findOne({ hash: hash });
         if (saved) {
@@ -26,4 +29,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-export default handler;
+export default withIronSessionApiRoute(handler, ironSessionOptions);

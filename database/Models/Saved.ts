@@ -1,5 +1,6 @@
 import mongoose from "@/database/connection";
 
+import * as Mongoose from "mongoose";
 interface ISavedTags {
     title: string;
     link: string;
@@ -12,6 +13,7 @@ interface ISaved {
     projectBudget: string;
     projectTags: ISavedTags[];
     projectLink: string;
+    user?: mongoose.Types.ObjectId | string;
 }
 const Schema = mongoose.Schema;
 
@@ -35,6 +37,10 @@ const SavedSchema = new Schema<ISaved>({
     projectLink: {
         type: String
     },
+    user: {
+        type: Mongoose.Types.ObjectId,
+        ref: "User"
+    }
 
 }, { timestamps: true });
 

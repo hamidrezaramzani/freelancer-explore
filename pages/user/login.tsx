@@ -18,8 +18,8 @@ const Login = () => {
     try {
       setLoading(true);
       await axios.post("/api/auth/login", values);
-      toast.success("حساب شما با موفقیت ایجاد شد و میتوانید ورود کنید");
-      router.push("/user/login");
+      toast.success("تبریک میگم میتوانید ورود کنید");
+      router.push("/");
       setLoading(false);
     } catch (error) {
       setLoading(false);
